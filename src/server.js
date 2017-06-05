@@ -30,6 +30,7 @@ app.post('/webhook/', (req, res) => {
     try {
         var speech = 'empty speech';
 
+        console.log('req.body', req.body);
         if (req.body) {
             var requestBody = req.body;
 

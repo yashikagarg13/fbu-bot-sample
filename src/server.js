@@ -7,6 +7,15 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.text({type: 'application/json'}));
 
+app.get("/webhook/", (req, res) => {
+    return res.status(200).json({
+        status: {
+            code: 200,
+            text: "Hello World"
+        }
+    });
+});
+
 app.post('/webhook/', (req, res) => {
     console.log('hook request');
     try {

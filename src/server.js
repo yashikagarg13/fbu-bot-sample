@@ -32,7 +32,7 @@ app.post('/webhook/', (req, res) => {
 
         console.log('typeof req.body', typeof req.body);
         if (req.body) {
-            var requestBody = req.body;
+            var requestBody = JSON.parse(req.body);
 
             if (requestBody.result) {
                 speech = '';

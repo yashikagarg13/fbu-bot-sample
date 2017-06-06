@@ -47,24 +47,27 @@ app.post('/webhook/', (req, res) => {
 
                 message = {
                   attachment: {
-                    template_type: "generic",
-                    elements: [{
-                      title: "Test job",
-                      subtitle: "Test subtitle",
-                      default_action: {
-                        type: "web_url",
-                        url: "https://google.com",
-                        messenger_extensions: true,
-                        webview_height_ratio: "tall",
-                        fallback_url: "https://google.com",
-                      },
-                      buttons:[{
-                        type: "web_url",
-                        url: "https://google.com",
-                        title: "View Website"
-                      }]
-                    }]
-                  }
+                    type: "template",
+                    payload: {
+                      template_type: "generic",
+                      elements: [{
+                        title: "Test job",
+                        subtitle: "Test subtitle",
+                        default_action: {
+                          type: "web_url",
+                          url: "https://google.com",
+                          messenger_extensions: true,
+                          webview_height_ratio: "tall",
+                          fallback_url: "https://google.com",
+                        },
+                        buttons:[{
+                          type: "web_url",
+                          url: "https://google.com",
+                          title: "View Website"
+                        }],
+                      }],
+                    },
+                  },
                 };
             }
         }

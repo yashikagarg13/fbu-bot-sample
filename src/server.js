@@ -26,29 +26,26 @@ app.get("/webhook/", (req, res) => {
 });
 
 app.post('/webhook/', (req, res) => {
-    console.log('hook request');
     try {
         var speech = 'empty speech';
 
-        console.log('typeof req.body', typeof req.body);
         if (req.body) {
             var requestBody = JSON.parse(req.body);
 
             if (requestBody.result) {
-                speech = '';
+                var cardMessage = {
+                    type: 1,
+                    title: "Test Card",
+                    subtitle: "Test card subtitle",
+                    buttons: [{
+                      text: "Apply",
+                      postback: "https://google.com"
+                    }],
+                };
 
-                if (requestBody.result.fulfillment) {
-                    speech += requestBody.result.fulfillment.speech;
-                    speech += ' ';
-                }
-
-                if (requestBody.result.action) {
-                    speech += 'action: ' + requestBody.result.action;
-                }
+                requestBody.result.fulfillment.messages.concat([cardMessage]);
             }
         }
-
-        console.log('result: ', speech);
 
         return res.json({
             speech: speech,

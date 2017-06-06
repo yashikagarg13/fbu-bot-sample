@@ -31,7 +31,7 @@ app.post('/webhook/', (req, res) => {
         var message = {};
 
         if (req.body) {
-            var requestBody = JSON.parse(req.body);
+            var requestBody = JSON.parse(req.body); console.log('requestBody', requestBody);
 
             if (requestBody.result) {
                 speech = '';
@@ -70,6 +70,9 @@ app.post('/webhook/', (req, res) => {
             source: 'apiai-webhook-sample',
             data: {
               facebook: {
+                recipient: {
+                  id: "",
+                },
                 message
               }
             },

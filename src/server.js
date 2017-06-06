@@ -28,27 +28,56 @@ app.get("/webhook/", (req, res) => {
 app.post('/webhook/', (req, res) => {
     try {
         var speech = 'empty speech';
+        var attachment = {};
 
         if (req.body) {
             var requestBody = JSON.parse(req.body);
 
             if (requestBody.result) {
-                var cardMessage = {
-                    type: 1,
-                    title: "Test Card",
-                    subtitle: "Test card subtitle",
-                    buttons: [{
-                      text: "Apply",
-                      postback: "https://google.com"
-                    }],
+                speech = '';
+
+                if (requestBody.result.fulfillment) {
+                    speech += requestBody.result.fulfillment.speech;
+                }
+
+                attachment = {
+                  type: "template",
+                  payload: {
+                    template_type: "generic",
+                    elements: [{
+                      title: "Test job",
+                      subtitle: "Test subtitle",
+                      default_action: {
+                        type: "web_url",
+                        url: "https://google.com",
+                        messenger_extensions: true,
+                        webview_height_ratio: "tall",
+                        fallback_url: "https://google.com",
+                      },
+                      buttons:[{
+                        type: "web_url",
+                        url: "https://petersfancybrownhats.com",
+                        title: "View Website"
+                      },{
+                        type: "postback",
+                        title: "Start Chatting",
+                        payload: "DEVELOPER_DEFINED_PAYLOAD"
+                      }]
+                    }]
+                  }
                 };
             }
         }
 
         return res.json({
-            speech: cardMessage,
-            displayText: requestBody.result.fulfillment.speech,
-            source: 'apiai-webhook-sample'
+            speech: speech,
+            displayText: speech,
+            source: 'apiai-webhook-sample',
+            data: {
+              facebook: {
+                attachment,
+              }
+            },
         });
     } catch (err) {
         console.error("Can't process request", err);

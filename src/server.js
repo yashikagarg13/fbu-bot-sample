@@ -42,14 +42,12 @@ app.post('/webhook/', (req, res) => {
                       postback: "https://google.com"
                     }],
                 };
-
-                requestBody.result.fulfillment.messages.concat([cardMessage]);
             }
         }
 
         return res.json({
-            speech: speech,
-            displayText: speech,
+            speech: cardMessage,
+            displayText: requestBody.result.fulfillment.speech,
             source: 'apiai-webhook-sample'
         });
     } catch (err) {

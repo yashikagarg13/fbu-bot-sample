@@ -41,30 +41,13 @@ app.post('/webhook/', (req, res) => {
                 }
 
                 attachment = {
-                  type: "template",
-                  payload: {
-                    template_type: "generic",
-                    elements: [{
-                      title: "Test job",
-                      subtitle: "Test subtitle",
-                      default_action: {
-                        type: "web_url",
-                        url: "https://google.com",
-                        messenger_extensions: true,
-                        webview_height_ratio: "tall",
-                        fallback_url: "https://google.com",
-                      },
-                      buttons:[{
-                        type: "web_url",
-                        url: "https://petersfancybrownhats.com",
-                        title: "View Website"
-                      },{
-                        type: "postback",
-                        title: "Start Chatting",
-                        payload: "DEVELOPER_DEFINED_PAYLOAD"
-                      }]
-                    }]
-                  }
+                  text: "speech",
+                  attachments: [{
+                    title: "Test job",
+                    title_link: "https://facebook.com",
+                    color: "#36a64f",
+
+                  }]
                 };
             }
         }

@@ -29,16 +29,20 @@ app.post('/webhook/', (req, res) => {
     try {
         var speech = 'empty speech';
         var message = {};
+        var recipientId = "";
 
-        console.log('req.body', req.body);
         if (req.body) {
-            var requestBody = JSON.parse(req.body); console.log('requestBody', requestBody.originalRequest.data.sender);
+            var requestBody = JSON.parse(req.body);
 
             if (requestBody.result) {
                 speech = '';
 
                 if (requestBody.result.fulfillment) {
                     speech += requestBody.result.fulfillment.speech;
+                }
+
+                if (requestBody.originalRequest && requestBody.originalRequest.data && requestBody.originalRequest.sender) {
+                  recipientId = requestBody.originalRequest.data.sender.id;
                 }
 
                 message = {
@@ -72,7 +76,7 @@ app.post('/webhook/', (req, res) => {
             data: {
               facebook: {
                 recipient: {
-                  id: requestBody.originalRequest.data.sender.id,
+                  id: recipientId,
                 },
                 message
               }

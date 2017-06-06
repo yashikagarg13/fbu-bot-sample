@@ -72,7 +72,7 @@ app.post('/webhook/', (req, res) => {
             data: {
               facebook: {
                 recipient: {
-                  id: "",
+                  id: requestBody.originalRequest.data.sender.id,
                 },
                 message
               }

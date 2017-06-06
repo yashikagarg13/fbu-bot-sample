@@ -78,9 +78,6 @@ app.post('/webhook/', (req, res) => {
             source: 'apiai-webhook-sample',
             data: {
               facebook: {
-                recipient: {
-                  id: recipientId,
-                },
                 message
               }
             },

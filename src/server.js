@@ -28,7 +28,7 @@ app.get("/webhook/", (req, res) => {
 app.post('/webhook/', (req, res) => {
     try {
         var speech = 'empty speech';
-        var facebookMessage = {};
+        var attachment = {};
 
         if (req.body) {
             var requestBody = JSON.parse(req.body);
@@ -40,13 +40,23 @@ app.post('/webhook/', (req, res) => {
                     speech += requestBody.result.fulfillment.speech;
                 }
 
-                facebookMessage = {
-                  text: "speech",
-                  attachments: [{
+                attachment = {
+                  template_type: "generic",
+                  elements: [{
                     title: "Test job",
-                    title_link: "https://facebook.com",
-                    color: "#36a64f",
-
+                    subtitle: "Test subtitle",
+                    default_action: {
+                      type: "web_url",
+                      url: "https://google.com",
+                      messenger_extensions: true,
+                      webview_height_ratio: "tall",
+                      fallback_url: "https://google.com",
+                    },
+                    buttons:[{
+                      type: "web_url",
+                      url: "https://google.com",
+                      title: "View Website"
+                    }]
                   }]
                 };
             }
@@ -57,7 +67,9 @@ app.post('/webhook/', (req, res) => {
             displayText: speech,
             source: 'apiai-webhook-sample',
             data: {
-              facebook:  facebookMessage
+              facebook: {
+                attachment
+              }
             },
         });
     } catch (err) {

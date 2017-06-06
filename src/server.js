@@ -28,7 +28,7 @@ app.get("/webhook/", (req, res) => {
 app.post('/webhook/', (req, res) => {
     try {
         var speech = 'empty speech';
-        var attachment = {};
+        var facebookMessage = {};
 
         if (req.body) {
             var requestBody = JSON.parse(req.body);
@@ -40,7 +40,7 @@ app.post('/webhook/', (req, res) => {
                     speech += requestBody.result.fulfillment.speech;
                 }
 
-                attachment = {
+                facebookMessage = {
                   text: "speech",
                   attachments: [{
                     title: "Test job",
@@ -57,9 +57,7 @@ app.post('/webhook/', (req, res) => {
             displayText: speech,
             source: 'apiai-webhook-sample',
             data: {
-              facebook: {
-                attachment,
-              }
+              facebook:  facebookMessage
             },
         });
     } catch (err) {

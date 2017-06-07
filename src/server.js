@@ -61,9 +61,7 @@ app.post('/webhook/', (req, res) => {
             displayText: speech,
             source: 'apiai-webhook-sample',
             data: {
-              facebook: {
-                message
-              }
+              facebook: message
             },
         });
     } catch (err) {

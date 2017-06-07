@@ -47,9 +47,17 @@ app.post('/webhook/', (req, res) => {
 
                 message = {
                   attachment: {
-                    type: "audio",
+                    type: "template",
                     payload: {
-                      url: "https://examples.api.ai/RichMessagesFiles/studebaker_1950.mp4"
+                      template_type: "generic",
+                      elements: [{
+                        title: "Test Job",
+                        subtitle: "Test job subtitle",
+                        buttons: [{
+                          title: "Apply",
+                          url: "http://google.com"
+                        }],
+                      }],
                     },
                   },
                 };

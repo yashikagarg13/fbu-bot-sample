@@ -78,7 +78,7 @@ app.post('/webhook/', (req, res) => {
             source: 'apiai-webhook-sample',
             data: {
               facebook: {
-                message
+                message: "Hello World!!"
               }
             },
         });

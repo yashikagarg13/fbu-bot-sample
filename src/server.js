@@ -47,7 +47,7 @@ app.post('/webhook/', (req, res) => {
 
                 message = {
                   attachment: {
-                    type: "template",
+                    type: "audio",
                     payload: {
                       url: "https://examples.api.ai/RichMessagesFiles/studebaker_1950.mp4"
                     },

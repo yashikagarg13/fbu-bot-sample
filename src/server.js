@@ -49,7 +49,7 @@ app.post('/webhook/', (req, res) => {
                   attachment: {
                     type: "template",
                     payload: {
-                      template_type: "generic",
+                      template_type: "list",
                       elements: [{
                         title: "Test Job",
                         subtitle: "Test job subtitle",

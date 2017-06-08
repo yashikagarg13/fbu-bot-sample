@@ -7,7 +7,7 @@ const rp = require('request-promise');
 
 const sendCardMessage = (senderId, category) => {
   let response = {};
-  return rp("https://qa.powertofly.com/api/v1/jobs?per_page=3&filter=category_title=="+category).
+  return rp("https://qa.powertofly.com/api/v1/jobs?per_page=3&filter=category_title=="+category)
     .then((response) =>  
       response = res;
       console.log('response', response);

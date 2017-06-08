@@ -20,7 +20,6 @@ const sendCardMessage = (senderId, text) => {
             elements: [{
               title: "Test Job",
               subtitle: "Test job subtitle",
-              item_url: "www.google.com",
               image_url: CAT_IMAGE_URL,
               buttons: [{
                 type: "web_url",
@@ -34,7 +33,7 @@ const sendCardMessage = (senderId, text) => {
     }
   }, function(err, httpResponse) {
     console.log('err', err);
-    console.log('httpResponse', httpResponse);
+    // console.log('httpResponse', httpResponse);
   });
 };
 
@@ -60,6 +59,7 @@ module.exports = (event) => {
         const result = response.result.fulfillment.speech;
         const intent = response.result.metadata.intentName;
 
+       console.log('result, intent', result, intent);
         if (intent === "search-job") {
           sendCardMessage(senderId);
         } else {

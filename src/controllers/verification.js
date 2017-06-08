@@ -1,6 +1,7 @@
 const {FB_VERIFY_TOKEN} = require("../config");
 
 module.exports = (req, res) => {
+  console.log('Verification');
   const hubChallenge = req.query['hub.challenge'];
 
   const hubMode = req.query['hub.mode'];

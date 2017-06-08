@@ -11,9 +11,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', verificationController);
-app.post('/', messageWebhookController);
-
 /*app.get("/webhook/", (req, res) => {
     return res.status(200).json({
         status: {
@@ -87,5 +84,5 @@ app.listen(REST_PORT, () => {
     console.log('Rest service ready on port ' + REST_PORT);
 });
 
-// curl 'https://api.api.ai/api/query?v=20150910&query=Hi&lang=en&sessionId=5adc0dba-bcb2-4889-a93e-2c92eaaad3dc&
-// timezone=2017-06-05T11:13:13+0530' -H 'Authorization:Bearer 052b4926d06f40d78a0742e3d3d44d05'
+app.get('/', verificationController);
+app.post('/', messageWebhookController);

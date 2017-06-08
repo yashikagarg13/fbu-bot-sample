@@ -46,7 +46,7 @@ module.exports = (event) => {
     apiaiSession.on('response', (response) => {
         const action = response.result.action;
 console.log('action', action);
-        if (action == "search-job") {
+        if (action === "search") {
           sendCardMessage(senderId);
         }
     });

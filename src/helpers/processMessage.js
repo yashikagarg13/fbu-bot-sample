@@ -32,8 +32,8 @@ const sendCardMessage = (senderId, text) => {
       },
     }
   }, function(err, httpResponse) {
-    console.log('err', err);
-    console.log('httpResponse', httpResponse);
+    // console.log('err', err);
+    // console.log('httpResponse', httpResponse);
   });
 };
 
@@ -41,16 +41,16 @@ module.exports = (event) => {
     const senderId = event.sender.id;
     const message = event.message.text;
 
-    sendCardMessage(senderId);
-
-    /*const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'botcube_co'});
+    const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'ptf_job_search'});
 
     apiaiSession.on('response', (response) => {
-        const result = response.result.fulfillment.speech;
-
-        sendTextMessage(senderId, result);
+        const action = response.result.action;
+console.log('action', action);
+        if (action == "search-job") {
+          sendCardMessage(senderId);
+        }
     });
 
     apiaiSession.on('error', error => console.log(error));
-    apiaiSession.end();*/
+    apiaiSession.end();
 };

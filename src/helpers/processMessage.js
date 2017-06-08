@@ -38,6 +38,18 @@ const sendCardMessage = (senderId, text) => {
   });
 };
 
+const sendTextMessage = (senderId, text) => {
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: FACEBOOK_ACCESS_TOKEN },
+    method: 'POST',
+    json: {
+      recipient: { id: senderId },
+      message: { text },
+    }
+  });
+};
+
 module.exports = (event) => {
     const senderId = event.sender.id;
     const message = event.message.text;
@@ -45,10 +57,13 @@ module.exports = (event) => {
     const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'ptf_job_search'});
 
     apiaiSession.on('response', (response) => {
-        const action = response.result.action;
+        const result = response.result.fulfillment.speech;
+        const intent = response.result.metadata.intentName;
 
-        if (action === "search") {
+        if (intent === "search-job") {
           sendCardMessage(senderId);
+        } else {
+          sendTextMessage(senderId, result);
         }
     });
 

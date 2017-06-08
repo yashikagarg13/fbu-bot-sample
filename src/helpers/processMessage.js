@@ -2,13 +2,15 @@ const {APIAI_ACCESS_TOKEN, FB_PAGE_ACCESS_TOKEN} = require("../config");
 const CAT_IMAGE_URL = "https://botcube.co/public/blog/apiai-tutorial-bot/hosico_cat.jpg";
 
 const apiAiClient = require('apiai')(APIAI_ACCESS_TOKEN);
-const request = require('request');
+const request = require("request");
+const rp = require('request-promise');
 
 const sendCardMessage = (senderId, category) => {
-  return request.get("https://qa.powertofly.com/api/v1/jobs?per_page=3&filter=category_title=="+category, function (err, res) {
-      console.log('err', err);
-    })
-    .pipe(
+  let response = {};
+  return rp("https://qa.powertofly.com/api/v1/jobs?per_page=3&filter=category_title=="+category).
+    .then((response) =>  
+      response = res;
+      console.log('response', response);
       request.post({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: FB_PAGE_ACCESS_TOKEN },
@@ -33,11 +35,11 @@ const sendCardMessage = (senderId, category) => {
             },
           },
         }
-      }, function(err, httpResponse) {
-        console.log('err', err);
-        // console.log('httpResponse', httpResponse);
-      })
-    );
+      });
+    })
+    .catch((error) => {
+    
+    })
 };
 
 const sendTextMessage = (senderId, text) => {

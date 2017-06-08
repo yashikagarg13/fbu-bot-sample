@@ -11,7 +11,7 @@ const sendTextMessage = (senderId, text) => {
         method: 'POST',
         json: {
             recipient: { id: senderId },
-            message: { text + "YAshika Garg" },
+            message: { text: text + " YAshika Garg" },
         }
     });
 };

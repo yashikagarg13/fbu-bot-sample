@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', verificationController);
 app.post('/', messageWebhookController);
 
-app.get("/webhook/", (req, res) => {
+/*app.get("/webhook/", (req, res) => {
     return res.status(200).json({
         status: {
             code: 200,
@@ -23,7 +23,7 @@ app.get("/webhook/", (req, res) => {
     });
 });
 
-/*app.post('/webhook/', (req, res) => {
+app.post('/webhook/', (req, res) => {
     try {
         var speech = 'empty speech';
         var message = {};

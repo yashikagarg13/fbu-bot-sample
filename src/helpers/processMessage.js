@@ -3,12 +3,12 @@ const CAT_IMAGE_URL = "https://botcube.co/public/blog/apiai-tutorial-bot/hosico_
 
 const apiAiClient = require('apiai')(APIAI_ACCESS_TOKEN);
 const request = require("request");
-const rp = require('request-promise');
+const rp = require('request-promise-native');
 
 const sendCardMessage = (senderId, category) => {
   let response = {};
   return rp("https://qa.powertofly.com/api/v1/jobs?per_page=3&filter=category_title=="+category)
-    .then((response) =>  
+    .then((res) => {
       response = res;
       console.log('response', response);
       request.post({

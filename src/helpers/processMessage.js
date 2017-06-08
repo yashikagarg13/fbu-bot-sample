@@ -10,8 +10,23 @@ const sendTextMessage = (senderId, text) => {
     qs: { access_token: FB_PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: {
-        recipient: { id: senderId },
-        message: { text: text + " YAshika Garg" },
+      recipient: { id: senderId },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "list",
+            elements: [{
+              title: "Test Job",
+              subtitle: "Test job subtitle",
+              buttons: [{
+                title: "Apply",
+                url: "http://google.com"
+              }],
+            }],
+          },
+        },
+      },
     }
   });
 };

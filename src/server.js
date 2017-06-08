@@ -4,17 +4,15 @@ const apiai = require('apiai');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const app = express();
-app.use(bodyParser.text({type: 'application/json'}));
+const verificationController = require('./controllers/verification');
+const messageWebhookController = require('./controllers/messageWebhook');
 
-app.get("/", (req, res) => {
-    return res.status(200).json({
-        status: {
-            code: 200,
-            text: "Hello World"
-        }
-    });
-});
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', verificationController);
+app.post('/', messageWebhookController);
 
 app.get("/webhook/", (req, res) => {
     return res.status(200).json({
@@ -25,7 +23,7 @@ app.get("/webhook/", (req, res) => {
     });
 });
 
-app.post('/webhook/', (req, res) => {
+/*app.post('/webhook/', (req, res) => {
     try {
         var speech = 'empty speech';
         var message = {};
@@ -83,7 +81,7 @@ app.post('/webhook/', (req, res) => {
         });
     }
 
-});
+});*/
 
 app.listen(REST_PORT, () => {
     console.log('Rest service ready on port ' + REST_PORT);

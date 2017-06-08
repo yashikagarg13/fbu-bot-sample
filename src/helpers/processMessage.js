@@ -57,10 +57,10 @@ module.exports = (event) => {
 
     apiaiSession.on('response', (response) => {
         const result = response.result.fulfillment.speech;
-        const intent = response.result.metadata.intentName;
+        const category = response.result.parameters.category;
 
-       console.log('result, intent', result, intent);
-        if (intent === "search-job") {
+       console.log('result, category', result, category);
+        if (category) {
           sendCardMessage(senderId);
         } else {
           sendTextMessage(senderId, result);

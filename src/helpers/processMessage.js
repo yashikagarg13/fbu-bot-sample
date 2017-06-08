@@ -5,6 +5,7 @@ const apiAiClient = require('apiai')(APIAI_ACCESS_TOKEN);
 const request = require('request');
 
 const sendCardMessage = (senderId, text) => {
+  console.log('sendCardMessage', senderId);
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_PAGE_ACCESS_TOKEN },
@@ -32,8 +33,8 @@ const sendCardMessage = (senderId, text) => {
       },
     }
   }, function(err, httpResponse) {
-    // console.log('err', err);
-    // console.log('httpResponse', httpResponse);
+    console.log('err', err);
+    console.log('httpResponse', httpResponse);
   });
 };
 
@@ -45,7 +46,7 @@ module.exports = (event) => {
 
     apiaiSession.on('response', (response) => {
         const action = response.result.action;
-console.log('action', action);
+
         if (action === "search") {
           sendCardMessage(senderId);
         }

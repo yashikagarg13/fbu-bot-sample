@@ -11,6 +11,25 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+app.listen(REST_PORT, () => {
+    console.log('Rest service ready on port ' + REST_PORT);
+});
+
+app.get('/', verificationController);
+app.post('/', messageWebhookController);
+
+
+
+
+
+
+
+
+
+
+
+
 /*app.get("/webhook/", (req, res) => {
     return res.status(200).json({
         status: {
@@ -79,10 +98,3 @@ app.post('/webhook/', (req, res) => {
     }
 
 });*/
-
-app.listen(REST_PORT, () => {
-    console.log('Rest service ready on port ' + REST_PORT);
-});
-
-app.get('/', verificationController);
-app.post('/', messageWebhookController);

@@ -4,41 +4,44 @@ const CAT_IMAGE_URL = "https://botcube.co/public/blog/apiai-tutorial-bot/hosico_
 const apiAiClient = require('apiai')(APIAI_ACCESS_TOKEN);
 const request = require('request');
 
-const sendCardMessage = (senderId, text) => {
-  console.log('sendCardMessage', senderId);
-  request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: FB_PAGE_ACCESS_TOKEN },
-    method: 'POST',
-    json: {
-      recipient: { id: senderId },
-      message: {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "generic",
-            elements: [{
-              title: "Test Job",
-              subtitle: "Test job subtitle",
-              image_url: CAT_IMAGE_URL,
-              buttons: [{
-                type: "web_url",
-                title: "Apply",
-                url: "www.google.com"
-              }],
-            }],
+const sendCardMessage = (senderId, category) => {
+  return request.get("https://qa.powertofly.com/api/v1/jobs?per_page=3&filter=category_title=="+category, function (err, res) {
+      console.log('err', err);
+    })
+    .pipe(
+      request.post({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: FB_PAGE_ACCESS_TOKEN },
+        json: {
+          recipient: { id: senderId },
+          message: {
+            attachment: {
+              type: "template",
+              payload: {
+                template_type: "generic",
+                elements: [{
+                  title: "Test Job",
+                  subtitle: "Test job subtitle",
+                  image_url: CAT_IMAGE_URL,
+                  buttons: [{
+                    type: "web_url",
+                    title: "Apply",
+                    url: "www.google.com"
+                  }],
+                }],
+              },
+            },
           },
-        },
-      },
-    }
-  }, function(err, httpResponse) {
-    console.log('err', err);
-    // console.log('httpResponse', httpResponse);
-  });
+        }
+      }, function(err, httpResponse) {
+        console.log('err', err);
+        // console.log('httpResponse', httpResponse);
+      })
+    );
 };
 
 const sendTextMessage = (senderId, text) => {
-  request({
+  return request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_PAGE_ACCESS_TOKEN },
     method: 'POST',
@@ -61,7 +64,7 @@ module.exports = (event) => {
 
        console.log('result, category', result, category);
         if (category) {
-          sendCardMessage(senderId);
+          sendCardMessage(senderId, category);
         } else {
           sendTextMessage(senderId, result);
         }

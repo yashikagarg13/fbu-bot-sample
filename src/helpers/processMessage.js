@@ -19,16 +19,21 @@ const sendCardMessage = (senderId, text) => {
             elements: [{
               title: "Test Job",
               subtitle: "Test job subtitle",
+              item_url: "www.google.com",
               image_url: CAT_IMAGE_URL,
               buttons: [{
+                type: "web_url",
                 title: "Apply",
-                url: "http://google.com"
+                url: "www.google.com"
               }],
             }],
           },
         },
       },
     }
+  }, function(err, httpResponse) {
+    console.log('err', err);
+    console.log('httpResponse', httpResponse);
   });
 };
 

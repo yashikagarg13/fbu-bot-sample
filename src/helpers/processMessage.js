@@ -5,30 +5,15 @@ const apiAiClient = require('apiai')(APIAI_ACCESS_TOKEN);
 const request = require('request');
 
 const sendTextMessage = (senderId, text) => {
-    /*request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: FB_PAGE_ACCESS_TOKEN },
-        method: 'POST',
-        json: {
-            recipient: { id: senderId },
-            message: { text: text + " YAshi`ka Garg" },
-        }
-    });*/
-
-    request({
-      url: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: { access_token: FB_PAGE_ACCESS_TOKEN },
-      method: 'POST',
-      json: {
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: FB_PAGE_ACCESS_TOKEN },
+    method: 'POST',
+    json: {
         recipient: { id: senderId },
-        message: {
-          attachment: {
-            type: 'image',
-            payload: { url: CAT_IMAGE_URL}
-          }
-        }
-      }
-    });
+        message: { text: text + " YAshika Garg" },
+    }
+  });
 };
 
 module.exports = (event) => {

@@ -40,7 +40,7 @@ const sendCardMessage = (senderId, text) => {
 const sendTextMessage = (senderId, text) => {
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: FACEBOOK_ACCESS_TOKEN },
+    qs: { access_token: FB_PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: {
       recipient: { id: senderId },

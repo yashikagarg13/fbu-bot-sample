@@ -8,15 +8,14 @@ const rp = require('request-promise-native');
 const sendCardMessage = (senderId, category) => {
   console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45");
   return rp({
-      uri: "https://qa.powertofly.com/api/v1/jobs/?per_page=3&page=0&filter=category_id==45",
+      uri: "https://qa.powertofly.com/api/v1/jobs/?per_page=3&page=0&filter=category_id==45&fields=id,title,header_image_name",
       json: true,
       method: "GET",
       // headers
       // qs: {access_token: "..."}
-    }).then(function (response) {
-      console.log('response', response);
-    }).catch(function (error) {
+    }, function (error, response) {
       console.log('error', error);
+      console.log('response', response);
     });
     /*.then((res) => {
       console.log('res', res);

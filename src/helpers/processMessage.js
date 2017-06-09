@@ -15,12 +15,17 @@ const sendCardMessage = (senderId, category) => {
         "Authorization": "Bearer 10rJS0M6ZHJ9vCPlRVWYHAdlioDfSC"
       },
     }).then(function (response) {
-      console.log('response', response);
-    }).catch(function (error) {
-      console.log('error', error);
-    });
-    /*.then((res) => {
-      console.log('res', res);
+      let jobs = response.data;
+      let elements = jobs.map(job => ({
+        title: job.title,
+        image_url: "https://dev-assets.powertofly.com/job-headers/common/small/" + job.header_image_name,
+        buttons: [{
+          type: "web_url",
+          title: "Apply",
+          url: "https://powertofly.com/jobs/detail/" + job.id,
+        }],
+      }));
+      console.log('elements', elements);
       return rp({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: FB_PAGE_ACCESS_TOKEN },
@@ -32,28 +37,17 @@ const sendCardMessage = (senderId, category) => {
               type: "template",
               payload: {
                 template_type: "generic",
-                elements: [{
-                  title: "Test Job",
-                  subtitle: "Test job subtitle",
-                  image_url: CAT_IMAGE_URL,
-                  buttons: [{
-                    type: "web_url",
-                    title: "Apply",
-                    url: "www.google.com"
-                  }],
-                }],
-              },
-            },
-          },
+                elements,
+              }
+            }
+          }
         }
       });
-    })
-    .then(response => {
+    }).then(function (response) {
       console.log('response', response);
-    })
-    .catch((error) => {
-    
-    })*/
+    }).catch(function (error) {
+      console.log('error', error);
+    });
 };
 
 const sendTextMessage = (senderId, text) => {

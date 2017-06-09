@@ -7,14 +7,13 @@ const rp = require('request-promise-native');
 
 const sendCardMessage = (senderId, category) => {
   console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs?page=0&per_page=3&filter=category_title=="+category);
-  let response = {};
   return rp("http://localhost:5000/api/v1/jobs?page=0&per_page=3&filter=category_title=="+category)
     .then((res) => {
-      response = res;
-      console.log('response', response);
-      request.post({
+      console.log('res', res);
+      return rp({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: FB_PAGE_ACCESS_TOKEN },
+        method: 'POST',
         json: {
           recipient: { id: senderId },
           message: {
@@ -37,6 +36,9 @@ const sendCardMessage = (senderId, category) => {
           },
         }
       });
+    })
+    .then(response => {
+      console.log('response', response);
     })
     .catch((error) => {
     

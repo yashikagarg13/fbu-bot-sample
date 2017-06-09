@@ -13,7 +13,7 @@ const sendCardMessage = (senderId, category) => {
       method: "GET",
       // headers
       // qs: {access_token: "..."}
-    }, function (response) {
+    }).then(function (response) {
       console.log('response', response);
     }).catch(function (error) {
       console.log('error', error);

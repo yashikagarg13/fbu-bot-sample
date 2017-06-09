@@ -6,8 +6,8 @@ const request = require("request");
 const rp = require('request-promise-native');
 
 const sendCardMessage = (senderId, category) => {
-  console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs?page=0&per_page=3&filter=category_title=="+category);
-  return rp("http://localhost:5000/api/v1/jobs?page=0&per_page=3&filter=category_title=="+category)
+  console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45");
+  return rp("http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45")
     .then((res) => {
       console.log('res', res);
       return rp({

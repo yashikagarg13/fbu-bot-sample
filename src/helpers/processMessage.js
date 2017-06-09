@@ -6,6 +6,7 @@ const request = require("request");
 const rp = require('request-promise-native');
 
 const sendCardMessage = (senderId, category) => {
+  console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs?page=0&per_page=3&filter=category_title=="+category);
   let response = {};
   return rp("http://localhost:5000/api/v1/jobs?page=0&per_page=3&filter=category_title=="+category)
     .then((res) => {

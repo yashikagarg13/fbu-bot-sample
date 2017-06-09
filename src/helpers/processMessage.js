@@ -7,7 +7,13 @@ const rp = require('request-promise-native');
 
 const sendCardMessage = (senderId, category) => {
   console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45");
-  return rp("http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45")
+  return rp({
+      uri: "http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45",
+      json: true,
+      method: "GET",
+      // headers
+      // qs: {access_token: "..."}
+    })
     .then((res) => {
       console.log('res', res);
       return rp({

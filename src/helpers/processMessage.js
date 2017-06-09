@@ -6,9 +6,8 @@ const request = require("request");
 const rp = require('request-promise-native');
 
 const sendCardMessage = (senderId, category) => {
-  console.log('sendCardMessage', "http://127.0.0.1:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45&fields=id,title,header_image_name");
   return rp({
-      uri: "https://powertofly.com/api/v1/jobs/?per_page=3&page=0&filter=category_id==45&fields=id,title,header_image_name",
+      uri: "https://powertofly.com/api/v1/jobs/?per_page=3&page=0&filter=category_id==83&fields=id,title,header_image_name",
       json: true,
       method: "GET",
       headers: {
@@ -25,7 +24,6 @@ const sendCardMessage = (senderId, category) => {
           url: "https://powertofly.com/jobs/detail/" + job.id,
         }],
       }));
-      console.log('elements', elements);
       return rp({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: FB_PAGE_ACCESS_TOKEN },
@@ -36,7 +34,7 @@ const sendCardMessage = (senderId, category) => {
             attachment: {
               type: "template",
               payload: {
-                template_type: "generic",
+                template_type: "list",
                 elements,
               }
             }

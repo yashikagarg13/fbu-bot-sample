@@ -16,7 +16,7 @@ const sendCardMessage = (senderId, category) => {
     }).then(function (response) {
       console.log('response', response);
     }).catch(function (error) {
-      console.log('err', err);
+      console.log('error', error);
     });
     /*.then((res) => {
       console.log('res', res);

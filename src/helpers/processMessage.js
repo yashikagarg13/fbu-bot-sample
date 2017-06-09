@@ -14,7 +14,7 @@ const sendCardMessage = (senderId, category) => {
       "Authorization": "Bearer 10rJS0M6ZHJ9vCPlRVWYHAdlioDfSC"
     },
   }).then(function (response) {
-    console.log('reponse', reponse);
+    console.log('response', response);
     return rp({
       uri: "https://powertofly.com/api/v1/jobs/?per_page=3&page=0&filter=category_id==83&fields=id,title,header_image_name",
       json: true,

@@ -8,14 +8,15 @@ const rp = require('request-promise-native');
 const sendCardMessage = (senderId, category) => {
   console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45");
   return rp({
-      uri: "http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45",
+      uri: "http://127.0.0.1:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45",
       json: true,
       method: "GET",
       // headers
       // qs: {access_token: "..."}
-    }, function (err, response) {
-      console.log('err', err);
+    }).then(function (response) {
       console.log('response', response);
+    }).catch(function (error) {
+      console.log('err', err);
     });
     /*.then((res) => {
       console.log('res', res);

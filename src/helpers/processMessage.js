@@ -6,9 +6,9 @@ const request = require("request");
 const rp = require('request-promise-native');
 
 const sendCardMessage = (senderId, category) => {
-  console.log('sendCardMessage', "http://localhost:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45");
+  console.log('sendCardMessage', "http://127.0.0.1:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45&fields=id,title,header_image_name");
   return rp({
-      uri: "http://192.168.1.255:5000/api/v1/jobs/?per_page=3&page=0&filter=category_id==45&fields=id,title,header_image_name",
+      uri: "http://127.0.0.1:5000/",
       json: true,
       method: "GET",
       headers: {

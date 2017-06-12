@@ -5,7 +5,8 @@ const rp = require('request-promise-native');
 module.exports = (req, res) => {
   const action = req.body.result.action;
   const category = req.body.result.parameters["category"];
-
+  console.log('action', action);
+  console.log('category', category);
   if (action == "search-job" && category) {
     return rp({
       uri: "https://powertofly.com/api/v1/categories/",

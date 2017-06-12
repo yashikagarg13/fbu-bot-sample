@@ -41,6 +41,7 @@ const getJobs = (senderId, category) => {
           url: "https://powertofly.com/jobs/detail/" + job.id,
         }],
       }));
+      sendCardMessage(senderId, "Here are top 3 jobs under " + category + " category");
       return sendCardMessage(senderId, elements);
     }
   }).then(function (response) {

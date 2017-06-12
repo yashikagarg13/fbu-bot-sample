@@ -94,6 +94,7 @@ module.exports = (event) => {
        console.log('message', message);
        
        if (category && message) {
+         sendTextMessage(senderId, result);
          sendCardMessage(senderId, message.facebook);
        } else {
          sendTextMessage(senderId, result);

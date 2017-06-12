@@ -98,10 +98,9 @@ module.exports = (event) => {
        const result = response.result.fulfillment.speech;
        const category = response.result.parameters.category;
 
-       console.log('response', response);
-       console.log('result, category', result, category);
+       console.log('response', JSON.stringify(response));
         if (category) {
-          sendCardMessage(senderId, category);
+          sendCardMessage(senderId, response);
         } else {
           sendTextMessage(senderId, result);
         }

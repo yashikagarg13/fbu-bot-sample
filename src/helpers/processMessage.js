@@ -55,23 +55,14 @@ const getJobs = (senderId, category) => {
   });
 };
 
-const sendCardMessage = (senderId, elements) => {
-console.log('elements', elements);
+const sendCardMessage = (senderId, message) => {
   return rp({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: {
      recipient: { id: senderId },
-     message: {
-       attachment: {
-         type: "template",
-         payload: {
-           template_type: "generic",
-           elements,
-         }
-       }
-     }
+     message
     }
   })
 }
@@ -97,13 +88,16 @@ module.exports = (event) => {
     apiaiSession.on('response', (response) => {
        const result = response.result.fulfillment.speech;
        const category = response.result.parameters.category;
-
-       console.log('response', JSON.stringify(response));
-        if (category) {
-          sendCardMessage(senderId, response);
-        } else {
-          sendTextMessage(senderId, result);
-        }
+       console.log('response.result.fulfillment.messages', JSON.stringify(response.result.fulfillment.messages));
+       const message = response.result.fulfillment.messages.filter(m => m.platform == "facebook");
+       
+       console.log('message', message);
+       
+       if (category && message) {
+         sendCardMessage(senderId, message[0].data.facebook);
+       } else {
+         sendTextMessage(senderId, result);
+       }
     });
 
     apiaiSession.on('error', error => console.log(error));

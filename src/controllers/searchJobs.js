@@ -5,8 +5,10 @@ const rp = require('request-promise-native');
 module.exports = (req, res) => {
   const action = req.body.result.action;
   const category = req.body.result.parameters["category"];
+  const speech = req.body.result.fulfillment.speech;
   console.log('action', action);
   console.log('category', category);
+  console.log('speech', speech);
   if (action == "search-job" && category) {
     return rp({
       uri: "https://powertofly.com/api/v1/categories/",
@@ -45,10 +47,23 @@ module.exports = (req, res) => {
           source: 'search-job'
         });
       } else {
+        let elements = jobs.map(job => ({
+          title: job.title,
+          image_url: "https://dev-assets.powertofly.com/job-headers/common/small/" + job.header_image_name,
+          buttons: [{
+            type: "web_url",
+            title: "Apply",
+            url: "https://powertofly.com/jobs/detail/" + job.id,
+          }],
+        }));
+
         return res.json({
           speech: "Here are top 3 jobs under " + category + " category",
           displayText: "Here are top 3 jobs under " + category + " category",
-          source: 'search-job'
+          source: 'search-job',
+          data: {
+            facebook: createFacebookMessage(elements)
+          }
         });
       }
     }).then(function (response) {
@@ -56,5 +71,21 @@ module.exports = (req, res) => {
     }).catch(function (error) {
       console.log('error', error);
     });
+  } else {
+    return res.json({
+      speech: speech,
+      displayText: speech,
+      source: 'search-job'
+    });
   }
 };
+
+const createFacebookMessage = (elements) => ({
+  attachment: {
+    type: "template",
+    payload: {
+     template_type: "generic",
+     elements,
+    }
+  }
+});

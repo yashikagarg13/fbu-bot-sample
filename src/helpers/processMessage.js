@@ -27,16 +27,22 @@ const getJobs = (senderId, category) => {
     })
   }).then(function (response) { console.log('response', response);
     let jobs = response.data;
-    let elements = jobs.map(job => ({
-      title: job.title,
-      image_url: "https://dev-assets.powertofly.com/job-headers/common/small/" + job.header_image_name,
-      buttons: [{
-        type: "web_url",
-        title: "Apply",
-        url: "https://powertofly.com/jobs/detail/" + job.id,
-      }],
-    }));
-    return sendCardMessage(senderId, elements);
+    let total = response.meta.total;
+
+    if (total == 0) {
+      return sendTextMessage(senderId, "No jobs found under " + category + " category");
+    } else {
+      let elements = jobs.map(job => ({
+        title: job.title,
+        image_url: "https://dev-assets.powertofly.com/job-headers/common/small/" + job.header_image_name,
+        buttons: [{
+          type: "web_url",
+          title: "Apply",
+          url: "https://powertofly.com/jobs/detail/" + job.id,
+        }],
+      }));
+      return sendCardMessage(senderId, elements);
+    }
   }).then(function (response) {
     console.log('response', response);
   }).catch(function (error) {

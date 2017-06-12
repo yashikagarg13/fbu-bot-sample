@@ -9,7 +9,7 @@ module.exports = (req, res) => {
   console.log('action', action);
   console.log('category', category);
   console.log('speech', speech);
-  if (action == "search-job" && category) {
+  if (action == "search" && category) {
     return rp({
       uri: "https://powertofly.com/api/v1/categories/",
       json: true,

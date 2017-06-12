@@ -6,7 +6,7 @@ const request = require("request");
 const rp = require('request-promise-native');
 
 let categories = [];
-const sendCardMessage = (senderId, category) => {
+const getJobs = (senderId, category) => {
   return rp({
     uri: "https://powertofly.com/api/v1/categories/",
     json: true,
@@ -35,29 +35,33 @@ const sendCardMessage = (senderId, category) => {
         url: "https://powertofly.com/jobs/detail/" + job.id,
       }],
     }));
-    return rp({
-      url: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: { access_token: FB_PAGE_ACCESS_TOKEN },
-      method: 'POST',
-      json: {
-        recipient: { id: senderId },
-        message: {
-          attachment: {
-            type: "template",
-            payload: {
-              template_type: "generic",
-              elements,
-            }
-          }
-        }
-      }
-    })
+    return sendCardMessage(senderId, elements);
   }).then(function (response) {
     console.log('response', response);
   }).catch(function (error) {
     console.log('error', error);
   });
 };
+
+const sendCardMessage = (senderId, elements) => {
+  return rp({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: FB_PAGE_ACCESS_TOKEN },
+    method: 'POST',
+    json: {
+     recipient: { id: senderId },
+     message: {
+       attachment: {
+         type: "template",
+         payload: {
+           template_type: "generic",
+           elements,
+         }
+       }
+     }
+    }
+  })
+}
 
 const sendTextMessage = (senderId, text) => {
   return request({
@@ -83,7 +87,7 @@ module.exports = (event) => {
 
        console.log('result, category', result, category);
         if (category) {
-          sendCardMessage(senderId, category);
+          getJobs(senderId, category);
         } else {
           sendTextMessage(senderId, result);
         }

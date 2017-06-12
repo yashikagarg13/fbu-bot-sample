@@ -17,7 +17,7 @@ const getJobs = (senderId, category) => {
   }).then(function (response) {
     let categoryId = response.data.filter(c => c.title === category)[0].id;
     return rp({
-      uri: "https://powertofly.com/api/v1/jobs/?status=active&per_page=3&page=0&filter=category_id==" +
+      uri: "https://powertofly.com/api/v1/jobs/?status=Active&per_page=3&page=0&filter=category_id==" +
         categoryId + "&fields=id,title,header_image_name",
       json: true,
       method: "GET",

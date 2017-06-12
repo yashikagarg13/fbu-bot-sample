@@ -93,7 +93,7 @@ module.exports = (event) => {
        
        console.log('message', message);
        
-       if (category && message) {
+       if (category && message.length > 0) {
          sendCardMessage(senderId, message[0].data.facebook);
        } else {
          sendTextMessage(senderId, result);

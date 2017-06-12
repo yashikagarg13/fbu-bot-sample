@@ -16,16 +16,20 @@ const getJobs = (senderId, category) => {
     },
   }).then(function (response) {
     let categoryId = response.data.filter(c => c.title === category)[0].id;
-    return rp({
-      uri: "https://powertofly.com/api/v1/jobs/?status=Active&per_page=3&page=0&filter=category_id==" +
-        categoryId + "&fields=id,title,header_image_name",
-      json: true,
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer 10rJS0M6ZHJ9vCPlRVWYHAdlioDfSC"
-      },
-    })
-  }).then(function (response) { console.log('response', response);
+    if (categoryId) {
+      return rp({
+        uri: "https://powertofly.com/api/v1/jobs/?status=Active&per_page=3&page=0&filter=category_id==" +
+          categoryId + "&fields=id,title,header_image_name",
+        json: true,
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer 10rJS0M6ZHJ9vCPlRVWYHAdlioDfSC"
+        },
+      });
+    } else {
+      return sendTextMessage(senderId, "No jobs found under " + category + " category");
+    }
+  }).then(function (response) {
     let jobs = response.data;
     let total = response.meta.total;
 
@@ -90,12 +94,13 @@ module.exports = (event) => {
     const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'ptf_job_search'});
 
     apiaiSession.on('response', (response) => {
-        const result = response.result.fulfillment.speech;
-        const category = response.result.parameters.category;
+       const result = response.result.fulfillment.speech;
+       const category = response.result.parameters.category;
 
+       console.log('response', response);
        console.log('result, category', result, category);
         if (category) {
-          getJobs(senderId, category);
+          sendCardMessage(senderId, category);
         } else {
           sendTextMessage(senderId, result);
         }

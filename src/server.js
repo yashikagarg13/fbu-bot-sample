@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const verificationController = require('./controllers/verification');
 const messageWebhookController = require('./controllers/messageWebhook');
+const searchJobs = require('./controllers/searchJobs');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.listen(REST_PORT, () => {
 
 app.get('/', verificationController);
 app.post('/', messageWebhookController);
+app.post("/search-jobs", searchJobs);
 
 
 

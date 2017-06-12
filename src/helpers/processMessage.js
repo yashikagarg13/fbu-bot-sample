@@ -17,14 +17,15 @@ const getJobs = (senderId, category) => {
   }).then(function (response) {
     let categoryId = response.data.filter(c => c.title === category)[0].id;
     return rp({
-      uri: "https://powertofly.com/api/v1/jobs/?per_page=3&page=0&filter=category_id==" + categoryId + "&fields=id,title,header_image_name",
+      uri: "https://powertofly.com/api/v1/jobs/?status=active&per_page=3&page=0&filter=category_id==" +
+        categoryId + "&fields=id,title,header_image_name",
       json: true,
       method: "GET",
       headers: {
         "Authorization": "Bearer 10rJS0M6ZHJ9vCPlRVWYHAdlioDfSC"
       },
     })
-  }).then(function (response) {
+  }).then(function (response) { console.log('response', response);
     let jobs = response.data;
     let elements = jobs.map(job => ({
       title: job.title,

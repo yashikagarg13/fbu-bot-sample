@@ -89,12 +89,12 @@ module.exports = (event) => {
        const result = response.result.fulfillment.speech;
        const category = response.result.parameters.category;
        console.log('response.result.fulfillment.messages', JSON.stringify(response.result.fulfillment.messages));
-       const message = response.result.fulfillment.messages.filter(m => m.platform == "facebook");
+       const message = response.result.fulfillment.data;
        
        console.log('message', message);
        
-       if (category && message.length > 0) {
-         sendCardMessage(senderId, message[0].data.facebook);
+       if (category && message) {
+         sendCardMessage(senderId, message.facebook);
        } else {
          sendTextMessage(senderId, result);
        }

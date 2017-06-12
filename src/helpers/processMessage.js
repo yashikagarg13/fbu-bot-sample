@@ -56,6 +56,7 @@ const getJobs = (senderId, category) => {
 };
 
 const sendCardMessage = (senderId, elements) => {
+console.log('elements', elements);
   return rp({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: FB_PAGE_ACCESS_TOKEN },

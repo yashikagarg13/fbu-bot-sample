@@ -45,7 +45,7 @@ module.exports = (event) => {
          sendTextMessage(senderId, result);
          sendCardMessage(senderId, data.facebook);
        } else {
-         sendTextMessage(senderId, result);
+         // sendTextMessage(senderId, result);
        }
     });
 

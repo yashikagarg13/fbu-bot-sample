@@ -32,16 +32,18 @@ module.exports = (event) => {
     const senderId = event.sender.id;
     const message = event.message.text;
 
+    console.log(senderId, message);
+
     const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'ptf_job_search'});
 
     apiaiSession.on('response', (response) => {
        const result = response.result.fulfillment.speech;
        const category = response.result.parameters.category;
-       const message = response.result.fulfillment.data;
+       const data = response.result.fulfillment.data;
        
        if (category && message) {
          // sendTextMessage(senderId, result);
-         sendCardMessage(senderId, message.facebook);
+         sendCardMessage(senderId, data.facebook);
        } else {
          sendTextMessage(senderId, result);
        }

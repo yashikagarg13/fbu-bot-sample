@@ -42,7 +42,7 @@ module.exports = (event) => {
        const data = response.result.fulfillment.data;
        
        if (category && message) {
-         // sendTextMessage(senderId, result);
+         sendTextMessage(senderId, result);
          sendCardMessage(senderId, data.facebook);
        } else {
          sendTextMessage(senderId, result);

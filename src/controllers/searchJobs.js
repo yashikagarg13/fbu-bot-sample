@@ -6,9 +6,7 @@ module.exports = (req, res) => {
   const action = req.body.result.action;
   const category = req.body.result.parameters["category"];
   const speech = req.body.result.fulfillment.speech;
-  console.log('action', action);
-  console.log('category', category);
-  console.log('speech', speech);
+
   if (action == "search" && category) {
     return rp({
       uri: "https://powertofly.com/api/v1/categories/",
@@ -56,7 +54,7 @@ module.exports = (req, res) => {
             url: "https://powertofly.com/jobs/detail/" + job.id,
           }],
         }));
-        console.log('elements', elements);
+
         return res.json({
           speech: "Here are top 3 jobs under " + category + " category",
           displayText: "Here are top 3 jobs under " + category + " category",
